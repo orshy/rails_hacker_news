@@ -49,6 +49,7 @@ class LinksController < ApplicationController
     @link.save
     redirect_to links_path
   end
+  
 
   private
   def link_params
