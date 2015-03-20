@@ -1,29 +1,31 @@
-<h1>Hacker News</h1><hr>
+<h3>Hacker News</h3><hr>
 
-<h4>Article: </h4>
+<h4>Article(s):</h4><br>
 
 <ul>
   <% @links.each do |link| %>
     <li>
-      <small><%= link_to link.url, "http://#{link.url}" %></small>
-      <%= form_for link do |f| %>
-      <small><%= link_to "view comments (#{link.comments.count})", link_path(link) %></small>
-      <small><%= link_to '(edit)', edit_link_path(link) %></small>
-      <small><%= link_to '(delete)', link_path(link),
+      <%= link_to link.name, "http://#{link.url}", :class => "btn btn-xs btn-primary" %>
+      <%= link_to "view comments (#{link.comments.count})", link_path(link), :class => "btn btn-xs btn-warning" %>
+      <%= link_to 'edit', edit_link_path(link), :class => "btn btn-xs btn-default" %>
+      <%= link_to 'delete', link_path(link),
                                         :data => {:confirm => 'Delete?',
-                                        :method => 'delete' } %></small><br>
+                                        :method => 'delete' }, :class => "btn btn-xs btn-danger" %><br>
 
-      <small>Link Score : <%= link.link_score%></small><br>
-      <%= f.hidden_field :link_score, value: link.link_score += 1 %>
-      <%= f.button 'Up Vote' %>
-      <% end %><%= link_to "Down Vote", link_downvote_path(link)  %><br>
+      Link Score : <%= link.link_score%>
+      <br><%= form_for link do |f| %>
+        <%= f.hidden_field :link_score, value: link.link_score + 1 %>
+        <%= f.button 'Up Vote', :class => "btn btn-xs btn-success" %>
+      <% end %>
 
-
-      <br>
+      <%= form_for link do |f| %>
+        <%= f.hidden_field :link_score, value: (link.link_score - 1) %>
+        <%= f.button 'Down Vote', :class => "btn btn-xs btn-danger" %>
+      <% end %><br>
 
     </li>
   <% end %>
 
 </ul>
 
-<p><small><%= link_to 'create new link', new_link_path %></small></p>
+<p><%= link_to 'Add new link', new_link_path, :class => "btn btn-sm btn-primary" %></p>

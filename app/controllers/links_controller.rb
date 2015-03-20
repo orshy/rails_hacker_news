@@ -43,14 +43,6 @@ class LinksController < ApplicationController
     redirect_to links_path
   end
 
-  def downvote
-    @link = Link.find(params[:link_id])
-    @link.link_score -= 1
-    @link.save
-    redirect_to links_path
-  end
-  
-
   private
   def link_params
     params.require(:link).permit(:name, :url, :link_score)
